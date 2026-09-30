@@ -10,6 +10,7 @@
   $defaults=['kabum'=>'https://www.kabum.com.br/busca/pc-gamer-bluepc','mercado'=>'https://www.mercadolivre.com.br/loja/bluepc','amazon'=>'https://www.amazon.com.br/s?k=bluepc+ludic','shopee'=>'https://shopee.com.br/oficial/search?keyword=computadores&shop=950046979','magalu'=>'https://www.magazineluiza.com.br/busca/computadores/?filters=brand---2eletro'];
   $specific=array_key_exists($context,$data['markets']);$links=$specific?$data['markets'][$context]:$defaults;
       $store_urls=['amazon'=>'https://www.amazon.com.br/stores/BluePc/page/A2E483D4-171C-48DD-8130-06BC1173F5F0?lp_asin=B0G6GLVDYL&ref_=ast_bln','mercado'=>'https://www.mercadolivre.com.br/loja/bluepc','magalu'=>'https://www.magazineluiza.com.br/lojista/2eletroinfo/','shopee'=>'https://shopee.com.br/2eletroinfo'];
+if($context==='corporativo')$links['amazon']=$store_urls['amazon'];
 if(!$links){echo '<p>Fale com nossa equipe para encontrar os modelos desta linha nos canais de compra.</p><a class="button" href="'.esc_url(bp_whatsapp('Olá! Quero consultar os modelos da linha '.ucfirst($context).'.')).'" target="_blank" rel="noopener">Consultar modelos '.esc_html(ucfirst($context)).'</a>';return;}
   echo '<div class="market-grid">';foreach($links as $key=>$default){$url=$store_urls[$key]??($specific?$default:bp_setting($key,$default));if(!$url)continue;echo '<a href="'.esc_url($url).'" target="_blank" rel="noopener">'.bp_market_logo($key,$names[$key]).'<span>Ver computadores</span></a>';}echo '</div>';
  }
