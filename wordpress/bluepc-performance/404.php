@@ -1,0 +1,1 @@
+<?php get_header(); ?><section class="wrap prose"><p class="eyebrow">Página não encontrada</p><h1>Vamos voltar ao caminho certo.</h1><p>Encontre seu próximo computador na página inicial.</p><?php bp_link('home','Voltar ao início','button'); ?></section><?php get_footer(); ?>

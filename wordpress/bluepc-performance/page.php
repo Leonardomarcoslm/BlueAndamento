@@ -1,0 +1,1 @@
+<?php get_header(); ?><section class="wrap prose"><?php while(have_posts()):the_post();the_title('<h1>','</h1>');the_content();endwhile; ?></section><?php get_footer(); ?>

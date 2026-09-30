@@ -1,0 +1,19 @@
+<?php
+ defined('ABSPATH') || exit;
+ add_action('admin_menu',function(){add_theme_page('Configurar BluePC','Configurar BluePC','edit_theme_options','bluepc-setup','bp_setup_screen');});
+ function bp_setup_screen(){if(!current_user_can('edit_theme_options'))return;?><div class="wrap"><h1>Configurar BluePC Performance</h1><p>Prepare as páginas e os modelos do novo layout. Conteúdos existentes não serão apagados; páginas correspondentes passam a exibir o modelo BluePC.</p><p>Produtos, pedidos e configurações do WooCommerce não são alterados. Faça um backup antes de aplicar em produção.</p><?php if(isset($_GET['done']))echo '<div class="notice notice-success"><p>Estrutura BluePC preparada. Confira as páginas e os contatos.</p></div>'; ?><form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><?php wp_nonce_field('bp_setup'); ?><input type="hidden" name="action" value="bp_setup"><p><label><input type="checkbox" name="set_home" value="1" checked> Usar o novo início como página inicial</label></p><?php submit_button('Preparar páginas BluePC'); ?></form><h2>Ajustes de contato e lojas</h2><p>Acesse Aparência → Personalizar → BluePC: contatos e lojas. Confirme telefone e link da Magalu.</p><h2>Reverter a estrutura</h2><p>Restaura os modelos e a configuração de página inicial anteriores. As páginas criadas pelo tema passam para rascunho e continuam disponíveis.</p><form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"><?php wp_nonce_field('bp_restore'); ?><input type="hidden" name="action" value="bp_restore"><?php submit_button('Restaurar configuração anterior','secondary'); ?></form></div><?php }
+ function bp_prepare_pages($set_home=true){
+  $backup=get_option('bp_setup_backup',[]);
+  if(!$backup){$backup=['show_on_front'=>get_option('show_on_front'),'page_on_front'=>get_option('page_on_front'),'pages'=>[]];}
+  foreach(bp_pages() as $key=>$data){
+   $page=get_page_by_path($data['slug']);
+   if(!$page){$id=wp_insert_post(['post_type'=>'page','post_status'=>'publish','post_title'=>$data['title'],'post_name'=>$data['slug']],true);if(is_wp_error($id))continue;$backup['pages'][$id]=['created'=>true,'template'=>'','key'=>''];}
+   else{$id=$page->ID;if(!isset($backup['pages'][$id]))$backup['pages'][$id]=['created'=>false,'status'=>$page->post_status,'template'=>get_post_meta($id,'_wp_page_template',true),'key'=>get_post_meta($id,'_bluepc_page',true)];}
+   if(get_post_status($id)!=='publish')wp_update_post(['ID'=>$id,'post_status'=>'publish']);update_post_meta($id,'_wp_page_template','page-bluepc.php');update_post_meta($id,'_bluepc_page',$key);
+   if($key==='home'&&$set_home){update_option('show_on_front','page');update_option('page_on_front',$id);}
+  }
+  update_option('bp_setup_backup',$backup,false);
+  flush_rewrite_rules(false);
+ }
+ add_action('admin_post_bp_setup',function(){if(!current_user_can('edit_theme_options'))wp_die('Acesso negado.');check_admin_referer('bp_setup');bp_prepare_pages(!empty($_POST['set_home']));wp_safe_redirect(admin_url('themes.php?page=bluepc-setup&done=1'));exit;});
+ add_action('admin_post_bp_restore',function(){if(!current_user_can('edit_theme_options'))wp_die('Acesso negado.');check_admin_referer('bp_restore');$backup=get_option('bp_setup_backup',[]);if($backup){foreach($backup['pages'] as $id=>$p){if($p['created'])wp_update_post(['ID'=>$id,'post_status'=>'draft']);else{if(isset($p['status']))wp_update_post(['ID'=>$id,'post_status'=>$p['status']]);if($p['template'])update_post_meta($id,'_wp_page_template',$p['template']);else delete_post_meta($id,'_wp_page_template');if($p['key'])update_post_meta($id,'_bluepc_page',$p['key']);else delete_post_meta($id,'_bluepc_page');}}update_option('show_on_front',$backup['show_on_front']);update_option('page_on_front',$backup['page_on_front']);delete_option('bp_setup_backup');flush_rewrite_rules(false);}wp_safe_redirect(admin_url('themes.php?page=bluepc-setup'));exit;});
