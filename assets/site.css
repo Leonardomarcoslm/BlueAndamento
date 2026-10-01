@@ -28,3 +28,16 @@
 @media(max-width:900px){.nav-wrap{padding-block:12px;gap:12px}.brand{order:0}.menu-toggle{order:1;margin-left:auto;border-radius:5px}.catalog-search{order:2;flex-basis:100%;max-width:none;min-width:0}#primary-nav{top:100%;max-height:65vh;overflow:auto;box-shadow:0 18px 30px #0006}#primary-nav ul{display:flex}.quick-nav>.wrap{gap:25px}.quick-nav a{padding:10px 0}.section{padding-block:44px}.split-story{gap:28px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.card-body{padding:18px}.card-body h3{font-size:1.2rem}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}html{scroll-padding-top:200px}}
 @media(max-width:640px){.utility{display:none}.wrap{width:calc(100% - 32px)}.nav-wrap{min-height:0}.brand img{width:120px}.catalog-search input{height:43px;font-size:13px}.quick-nav>.wrap{gap:23px}.quick-nav a{font-size:12px}.category-grid{grid-template-columns:1fr;gap:20px}.card-body{padding:22px}.card-body h3{font-size:1.45rem}.card-body p{font-size:15px}.trust-strip .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-block:12px}.trust-strip span{padding:4px;font-size:10px;line-height:1.5;text-align:center}.trust-strip b{display:block;margin:0 0 3px;font-size:12px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.market-grid>a{padding:18px 12px}.story-image img{height:260px}.faq-list summary{font-size:14px}.review-grid{gap:14px}.help-inner h2{font-size:1.8rem}.button{min-height:46px}.whatsapp-float{max-width:calc(100vw - 32px)}.footer-grid{gap:24px}.line-grid{gap:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.category-card:hover,.line-card:hover,.market-grid>a:hover,.button:hover{transform:none}}
+
+/* Scroll reveals: content stays readable without JavaScript or motion. */
+@media(prefers-reduced-motion:no-preference){
+  .tech-reveal{animation:bp-tech-reveal .7s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms) backwards}
+  .section-heading{position:relative;padding-bottom:14px}
+  .section-heading:after{content:'';display:block;width:84px;height:2px;margin-top:20px;background:linear-gradient(90deg,#24bdff,#72d9ff,transparent);box-shadow:0 0 12px #24bdff55;transform-origin:left}
+  .section-heading.tech-reveal:after{animation:bp-circuit-in .9s ease-out both}
+  .market-grid>a.tech-reveal,.category-card.tech-reveal,.line-card.tech-reveal{animation-name:bp-tech-reveal,bp-edge-pulse;animation-duration:.7s,1.2s;animation-fill-mode:backwards,backwards}
+  @keyframes bp-tech-reveal{from{opacity:.3;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes bp-circuit-in{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
+  @keyframes bp-edge-pulse{0%,100%{border-color:#2a3a50}45%{border-color:#58cfff;box-shadow:0 0 20px #1389ce20}}
+}
+@media(max-width:640px) and (prefers-reduced-motion:no-preference){.tech-reveal{animation-duration:.5s;animation-delay:0ms}@keyframes bp-tech-reveal{from{opacity:.45;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}}
