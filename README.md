@@ -1,16 +1,20 @@
 # BluePC
 
-Tema WordPress e prévia estática do site BluePC.
+Site BluePC com tema WordPress, blocos editáveis no Elementor e prévia estática.
 
-## Estrutura
-- `wordpress/bluepc-performance/`: tema instalável do WordPress.
-- `preview/`: prévia HTML, CSS e JavaScript. Abra `index.html` para navegar.
+## WordPress + Elementor
+- `wordpress/bluepc-performance/`: tema do WordPress local.
+- `wordpress/bluepc-elementor/`: plugin de blocos editáveis. Requer Elementor.
+- [Guia de instalação e edição](wordpress/GUIA-ELEMENTOR.md).
 
-## WordPress
-Copie a pasta do tema para `wp-content/themes/` e ative BluePC Performance no painel. Use a configuração BluePC para preparar páginas e menu. Este repositório não contém banco de dados, credenciais, plugins ou o núcleo do WordPress. Os conteúdos de layout e imagens estão incluídos no tema.
+O plugin prepara 12 páginas com textos, imagens e links editáveis por campos no Elementor, além de cabeçalho e rodapé globais. Os blocos têm estrutura visual própria; não são widgets nativos separados para cada texto. A preparação mantém uma cópia reversível dos dados anteriores e não sobrescreve páginas já migradas.
 
-## Hospedagem
-O GitHub armazena o código. WordPress exige hospedagem PHP com banco de dados; GitHub Pages serve apenas a prévia estática.
+## Site público
+[Acessar a prévia BluePC](https://leonardomarcoslm.github.io/BlueAndamento/).
 
-## Direitos
+`preview/` contém a versão estática servida pela branch `gh-pages`. GitHub Pages não executa WordPress, Elementor ou PHP. Edições no WordPress não são publicadas automaticamente no Pages. Para usar o editor no site online, instale o tema e o plugin em hospedagem WordPress.
+
+## Conteúdo do repositório
+Não inclui banco de dados, credenciais, backups, núcleo WordPress nem plugins de terceiros. Textos, imagens e modelos iniciais acompanham os blocos do plugin.
+
 Marca BluePC, imagens e logos de terceiros permanecem sujeitos aos direitos dos respectivos titulares.

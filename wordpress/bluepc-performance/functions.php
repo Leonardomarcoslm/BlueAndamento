@@ -23,9 +23,9 @@ add_action('wp_head',function(){if(defined('WPSEO_VERSION')||defined('RANK_MATH_
 add_action('template_redirect',function(){if(!is_404())return;$path=trim((string)parse_url(wp_unslash($_SERVER['REQUEST_URI']??'/'),PHP_URL_PATH),'/');$base=trim((string)parse_url(home_url('/'),PHP_URL_PATH),'/');if($base&&str_starts_with($path,$base.'/'))$path=substr($path,strlen($base)+1);$aliases=['402-2'=>'gamer','office'=>'corporativo','computadores-office'=>'workstation','contatoooo'=>'contato'];if(isset($aliases[$path])){wp_safe_redirect(bp_url($aliases[$path]),301);exit;}});
 // Explicitly own the theme header/footer instead of Elementor's legacy replacement.
 add_action('elementor/theme/register_locations',function($manager){$manager->register_core_location('header');$manager->register_core_location('footer');});
-function bp_is_native_page(){return !is_admin()&&!isset($_GET['elementor-preview'])&&(is_front_page()||is_page_template('page-bluepc.php')||bp_current_key()!=='');}
+function bp_is_native_page(){if(function_exists('bpe_enabled')&&bpe_enabled())return false;return !is_admin()&&!isset($_GET['elementor-preview'])&&(is_front_page()||is_page_template('page-bluepc.php')||bp_current_key()!=='');}
 add_action('wp',function(){
- if(!bp_is_native_page())return;
+ if(!bp_is_native_page()&&!(function_exists('bpe_enabled')&&bpe_enabled()))return;
  $class='ElementorPro\Modules\FloatingButtons\Module';
  if(class_exists($class))remove_action('wp_footer',[$class::instance(),'print_floating_buttons']);
 });
