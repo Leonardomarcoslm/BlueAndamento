@@ -18,3 +18,7 @@ O plugin prepara 12 páginas com textos, imagens e links editáveis por campos n
 Não inclui banco de dados, credenciais, backups, núcleo WordPress nem plugins de terceiros. Textos, imagens e modelos iniciais acompanham os blocos do plugin.
 
 Marca BluePC, imagens e logos de terceiros permanecem sujeitos aos direitos dos respectivos titulares.
+
+## Atualização de 7 de outubro de 2026
+
+A versão pública em `preview/` foi atualizada a partir da exportação Simply Static fornecida pelo proprietário. Os caminhos foram adaptados para `/BlueAndamento/`; as URLs antigas em `.html` redirecionam para as páginas atuais. O WordPress em `wordpress/` permanece como código da integração anterior; este ZIP é uma exportação estática, não um backup do banco de dados.
